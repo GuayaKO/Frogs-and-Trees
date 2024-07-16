@@ -24,7 +24,7 @@ func build_new_game(board_size: Vector2i, tree_count: int) -> Dictionary:
 	game.frog_locations = []
 	while game.frog_locations.size() == 0:
 		game.tree_locations = generate_tree_locations(board_size, tree_count)
-		game.frog_locations = find_valid_solution(
+		game.frog_locations = get_valid_solution(
 			game.tree_locations.duplicate(),
 			[],
 			board_size
@@ -41,7 +41,7 @@ func generate_tree_locations(board_size: Vector2i, tree_count: int) -> Array:
 	return locations.slice(0, tree_count)
 
 
-func find_valid_solution(tree_locations: Array, frog_locations: Array, board_size: Vector2i) -> Array:
+func get_valid_solution(tree_locations: Array, frog_locations: Array, board_size: Vector2i) -> Array:
 	if tree_locations.is_empty():
 		return frog_locations.duplicate()
 	ORTOGONAL_DIRECTIONS.shuffle()
@@ -49,7 +49,7 @@ func find_valid_solution(tree_locations: Array, frog_locations: Array, board_siz
 		var frog = tree_locations[0] + direction
 		if within_board_limits(frog, board_size) and not next_to_peer(frog, frog_locations):
 			frog_locations.append(frog)
-			var solution = find_valid_solution(
+			var solution = get_valid_solution(
 				tree_locations.slice(1, tree_locations.size()).duplicate(),
 				frog_locations.duplicate(),
 				board_size
@@ -73,6 +73,60 @@ func next_to_peer(this_object: Vector2i, all_objects: Array) -> bool:
 		if all_objects.has(this_object + direction):
 			return true
 	return false
+
+
+func generate_board_hints(frog_locations: Array, board_size: Vector2i) -> Dictionary:
+	var hints := {}
+	hints.column = []
+	hints.row = []
+	for i in range(board_size.x):
+		hints.column.append(0)
+	for i in range(board_size.y):
+		hints.row.append(0)
+	for frog in frog_locations:
+		hints.column[frog.x] += 1
+		hints.row[frog.y] += 1
+	return hints
+
+
+func correct_frog_count(current_count: int, expected_count: int) -> bool:
+	return current_count == expected_count
+
+
+func correct_hint_correspondence(current_hints: Dictionary, expected_hints: Dictionary) -> bool:
+	for r in range(current_hints.row.size()):
+		if current_hints.row[r] != expected_hints.row[r]:
+			return false
+	for c in range(current_hints.column.size()):
+		if current_hints.column[c] != expected_hints.column[c]:
+			return false
+	return true
+
+
+func correct_frog_spacing(frog_locations: Array) -> bool:
+	var directions := ORTOGONAL_DIRECTIONS + DIAGONAL_DIRECTIONS
+	for i in range(frog_locations.size()):
+		for j in range(i + 1, frog_locations.size()):
+			if frog_locations[i] == frog_locations[j]:
+				return false
+			for direction in directions:
+				if frog_locations[i] + direction == frog_locations[j]:
+					return false
+	return true
+
+
+func points_are_neighbors(point_a: Vector2i, point_b: Vector2i) -> bool:
+	var difference := Vector2i(point_a.x - point_b.x, point_a.y - point_b.y)
+	return difference in ORTOGONAL_DIRECTIONS or difference in DIAGONAL_DIRECTIONS
+
+
+func correct_tree_correspondance(frog_locations: Array, tree_locations: Array) -> bool:
+	var matched := []
+	for tree in tree_locations:
+		matched.append(false)
+		for frog in frog_locations:
+			matched[-1] = matched[-1] or points_are_neighbors(tree, frog)
+	return matched.all(func(x): return x)
 
 
 func print_board_state(tree_locations, frog_locations, board_size):
