@@ -89,11 +89,11 @@ func generate_board_hints(frog_locations: Array, board_size: Vector2i) -> Dictio
 	return hints
 
 
-func correct_frog_count(current_count: int, expected_count: int) -> bool:
+func check_frog_count(current_count: int, expected_count: int) -> bool:
 	return current_count == expected_count
 
 
-func correct_hint_correspondence(current_hints: Dictionary, expected_hints: Dictionary) -> bool:
+func check_hint_correspondence(current_hints: Dictionary, expected_hints: Dictionary) -> bool:
 	for r in range(current_hints.row.size()):
 		if current_hints.row[r] != expected_hints.row[r]:
 			return false
@@ -103,30 +103,28 @@ func correct_hint_correspondence(current_hints: Dictionary, expected_hints: Dict
 	return true
 
 
-func correct_frog_spacing(frog_locations: Array) -> bool:
-	var directions := ORTOGONAL_DIRECTIONS + DIAGONAL_DIRECTIONS
-	for i in range(frog_locations.size()):
-		for j in range(i + 1, frog_locations.size()):
-			if frog_locations[i] == frog_locations[j]:
-				return false
-			for direction in directions:
-				if frog_locations[i] + direction == frog_locations[j]:
-					return false
-	return true
-
-
 func points_are_neighbors(point_a: Vector2i, point_b: Vector2i) -> bool:
 	var difference := Vector2i(point_a.x - point_b.x, point_a.y - point_b.y)
 	return difference in ORTOGONAL_DIRECTIONS or difference in DIAGONAL_DIRECTIONS
 
 
-func correct_tree_correspondance(frog_locations: Array, tree_locations: Array) -> bool:
-	var matched := []
-	for tree in tree_locations:
-		matched.append(false)
-		for frog in frog_locations:
-			matched[-1] = matched[-1] or points_are_neighbors(tree, frog)
-	return matched.all(func(x): return x)
+func check_game_solution(tree_locations: Array, frog_locations: Array) -> bool:
+	if tree_locations.is_empty():
+		return true
+	else:
+		var tree = tree_locations[0]
+		var frog := Vector2i.ZERO
+		for f in range(frog_locations.size()):
+			frog = frog_locations[f]
+			if points_are_neighbors(tree, frog):
+				frog_locations.erase(frog)
+				if check_game_solution(tree_locations.slice(1, tree_locations.size()), frog_locations):
+					return true
+				else:
+					frog_locations.insert(f, frog)
+					continue
+		return false
+		
 
 
 func print_board_state(tree_locations, frog_locations, board_size):
