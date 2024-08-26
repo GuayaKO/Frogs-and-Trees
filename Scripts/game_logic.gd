@@ -1,9 +1,15 @@
 extends Node
 
 
+# Board pieces
+const PIECE_TREE := "Y"
+const PIECE_FROG := "K̈"
+
+
 # Default color palettes
-var light_green := Color(0.733, 0.933, 0.800)
-var dark_green := Color(0.000, 0.466, 0.000)
+const GREEN_LIGHT := Color(0.733, 0.933, 0.800)		# BBEECC
+const GREEN_DARK := Color(0.000, 0.466, 0.000)		# 007700
+const PURPLE_DARK := Color(0.800, 0.200, 0.600)		# FF33C8
 
 
 # Direction deltas
@@ -19,6 +25,13 @@ const ORTOGONAL_DIRECTIONS = [NORTH, EAST, SOUTH, WEST]
 const DIAGONAL_DIRECTIONS = [NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST]
 
 
+# Game Scenes
+const MENU_DIFFICULTY := preload("res://menu_difficulty.tscn")
+const MENU_MAIN := preload("res://menu_main.tscn")
+const GAME_TITLE := preload("res://game_title.tscn")
+const BOARD_EASY := preload("res://board_easy.tscn")
+
+
 func build_new_game(board_size: Vector2i, tree_count: int) -> Dictionary:
 	var game := {}
 	game.frog_locations = []
@@ -29,14 +42,15 @@ func build_new_game(board_size: Vector2i, tree_count: int) -> Dictionary:
 			[],
 			board_size
 		)
+		game.board_hints = generate_board_hints(game.frog_locations, board_size)
 	return game
 
 
 func generate_tree_locations(board_size: Vector2i, tree_count: int) -> Array:
 	var locations = []
-	for x in range(board_size.x):
-		for y in range(board_size.y):
-			locations.append(Vector2i(x, y))
+	for c in range(board_size.x):
+		for r in range(board_size.y):
+			locations.append(Vector2i(c, r))
 	locations.shuffle()
 	return locations.slice(0, tree_count)
 
@@ -124,7 +138,6 @@ func check_game_solution(tree_locations: Array, frog_locations: Array) -> bool:
 					frog_locations.insert(f, frog)
 					continue
 		return false
-		
 
 
 func print_board_state(tree_locations, frog_locations, board_size):
@@ -139,3 +152,27 @@ func print_board_state(tree_locations, frog_locations, board_size):
 			else:
 				row += "+"
 		print(row)
+
+
+func shift_x_axis(target_node: Node, delta_pixels: int, duration_seconds: float=0.3) -> void:
+	var tween := create_tween()
+	tween.tween_property(
+		target_node, "position",
+		Vector2(
+			target_node.position.x + delta_pixels,
+			target_node.position.y
+		),
+		duration_seconds
+	)
+
+
+func shift_y_axis(target_node: Node, delta_pixels: int, duration_seconds: float=0.3) -> void:
+	var tween := create_tween()
+	tween.tween_property(
+		target_node, "position",
+		Vector2(
+			target_node.position.x,
+			target_node.position.y + delta_pixels
+		),
+		duration_seconds
+	)
