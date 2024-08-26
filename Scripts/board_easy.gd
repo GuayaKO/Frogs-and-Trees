@@ -27,13 +27,18 @@ func _ready():
 	for c in range(COLS):
 		for r in range(ROWS):
 			if Vector2i(c, r) in game.tree_locations:
-				board[c][r].text = GameLogic.PIECE_TREE
-				board[c][r].disabled = true
-				print(c, r)
+				board[r][c].text = GameLogic.PIECE_TREE
+				board[r][c].disabled = true
+				print(r, c)
 			else:
-				board[c][r].text = " "
-			board[c][r].pressed.connect(_on_pressed.bind(board[c][r]))
-	# Place 
+				board[r][c].text = " "
+			board[r][c].pressed.connect(_on_pressed.bind(board[r][c]))
+	# Place board hints
+	var hint_labels := get_hint_labels()
+	for c in range(COLS):
+		hint_labels.column[c].text = str(board_hints.column[c])
+	for r in range(ROWS):
+		hint_labels.row[r].text = str(board_hints.row[r])
 	await get_tree().create_timer(0.15).timeout
 	GameLogic.shift_x_axis(self, -1080)
 
@@ -58,7 +63,6 @@ func _on_pressed(board_button: Button):
 			print("- Correct hints!")
 			if GameLogic.check_game_solution(tree_locations, frog_locations):
 				print("Solved!")
-		
 	print(frog_locations)
 
 
@@ -140,4 +144,26 @@ func get_board_squares() -> Dictionary:
 		]
 	}
 	return board_squares
+
+
+func get_hint_labels() -> Dictionary:
+	var hint_labels := {
+		"column": [
+			$"MarginContainer/VBoxContainer/HBoxContainer/Column0",
+			$"MarginContainer/VBoxContainer/HBoxContainer/Column1",
+			$"MarginContainer/VBoxContainer/HBoxContainer/Column2",
+			$"MarginContainer/VBoxContainer/HBoxContainer/Column3",
+			$"MarginContainer/VBoxContainer/HBoxContainer/Column4",
+			$"MarginContainer/VBoxContainer/HBoxContainer/Column5",
+		],
+		"row": [
+			$"MarginContainer/VBoxContainer/HBoxContainer2/Row0",
+			$"MarginContainer/VBoxContainer/HBoxContainer3/Row1",
+			$"MarginContainer/VBoxContainer/HBoxContainer4/Row2",
+			$"MarginContainer/VBoxContainer/HBoxContainer5/Row3",
+			$"MarginContainer/VBoxContainer/HBoxContainer6/Row4",
+			$"MarginContainer/VBoxContainer/HBoxContainer7/Row5",
+		]
+	}
+	return hint_labels
 
