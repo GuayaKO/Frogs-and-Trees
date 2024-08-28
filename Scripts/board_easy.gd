@@ -41,6 +41,8 @@ func _ready():
 		hint_labels.row[r].text = str(board_hints.row[r])
 	await get_tree().create_timer(0.15).timeout
 	GameLogic.shift_x_axis(self, -1080)
+	GameLogic.time_start = Time.get_unix_time_from_system()
+	print(GameLogic.time_start)
 
 
 func _on_pressed(board_button: Button):
@@ -53,17 +55,19 @@ func _on_pressed(board_button: Button):
 	else:
 		frog_locations.erase(coordinates)
 	if GameLogic.check_frog_count(frog_locations.size(), FROG_COUNT):
-		print("- Correct size!")
 		var hints := GameLogic.generate_board_hints(frog_locations, BOARD_SIZE)
-		print(hints, board_hints)
-		if GameLogic.check_hint_correspondence(
-			hints,
-			board_hints
-		):
-			print("- Correct hints!")
+		if GameLogic.check_hint_correspondence(hints, board_hints):
 			if GameLogic.check_game_solution(tree_locations, frog_locations):
-				print("Solved!")
-	print(frog_locations)
+				GameLogic.time_stop = Time.get_unix_time_from_system()
+				print(GameLogic.time_stop)
+				var duration := 0.9
+				GameLogic.shift_x_axis(self, -1080, duration)
+				var scene = GameLogic.GAME_OVER.instantiate()
+				var root := get_node("/root/GameRoot")
+				root.add_child(scene)
+				GameLogic.shift_x_axis(scene, -1080, duration)
+				await get_tree().create_timer(duration).timeout
+				self.queue_free()
 
 
 func change_button_text(button_text: String) -> String:

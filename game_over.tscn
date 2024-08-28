@@ -1,0 +1,88 @@
+[gd_scene load_steps=8 format=3 uid="uid://4caw4v75oq3u"]
+
+[ext_resource type="FontFile" uid="uid://ccq3aw4j4we1e" path="res://Fonts/Fira Sans/FiraSans-Regular.ttf" id="1_1s8n3"]
+[ext_resource type="Script" path="res://Scripts/game_over.gd" id="1_ov3io"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jit18"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3ehun"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0gs08"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_orpj5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1yks5"]
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1080.0
+offset_right = 1080.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_ov3io")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 200
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 15
+
+[node name="CongratulationLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_1s8n3")
+theme_override_font_sizes/font_size = 100
+text = "Congratulations!"
+horizontal_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 15
+
+[node name="CounterLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.466667, 0, 1)
+theme_override_fonts/font = ExtResource("1_1s8n3")
+theme_override_font_sizes/font_size = 100
+horizontal_alignment = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 75
+theme_override_constants/margin_bottom = 15
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_1s8n3")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jit18")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_3ehun")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_0gs08")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_orpj5")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1yks5")
+text = "Back       "
+alignment = 2
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer3/BackButton" to="." method="_on_back_button_pressed"]

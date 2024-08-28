@@ -4,7 +4,7 @@
 [ext_resource type="FontFile" uid="uid://bh5s2x2jky0bo" path="res://Fonts/Major Mono Display/MajorMonoDisplay-Regular.ttf" id="2_xyofg"]
 [ext_resource type="StyleBox" uid="uid://x8ln52bp1ew1" path="res://Styles/button_easy_style.tres" id="3_15fse"]
 
-[node name="EasyBoard" type="Control"]
+[node name="BoardEasy" type="Control"]
 layout_mode = 3
 anchors_preset = 12
 anchor_top = 1.0

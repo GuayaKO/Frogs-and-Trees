@@ -29,7 +29,13 @@ const DIAGONAL_DIRECTIONS = [NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST]
 const MENU_DIFFICULTY := preload("res://menu_difficulty.tscn")
 const MENU_MAIN := preload("res://menu_main.tscn")
 const GAME_TITLE := preload("res://game_title.tscn")
+const GAME_OVER := preload("res://game_over.tscn")
 const BOARD_EASY := preload("res://board_easy.tscn")
+
+
+# Time stamps
+var time_start := 0
+var time_stop := 0
 
 
 func build_new_game(board_size: Vector2i, tree_count: int) -> Dictionary:
