@@ -2,6 +2,7 @@ extends Control
 
 
 const TIMER_STRING := "%02d:%02d:%02d"
+var MENU_MAIN := "res://menu_main.tscn"
 
 
 func _ready():
@@ -16,7 +17,6 @@ func _ready():
 func _on_back_button_pressed():
 	GameLogic.shift_x_axis(self, 1080)
 	var root := get_node("/root/GameRoot")
-	var scene := GameLogic.MENU_MAIN.instantiate()
-	root.add_child(scene)
+	root.add_child(load(MENU_MAIN).instantiate())
 	await get_tree().create_timer(0.3).timeout
 	self.queue_free()

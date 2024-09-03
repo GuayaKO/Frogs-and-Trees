@@ -1,0 +1,95 @@
+[gd_scene load_steps=8 format=3 uid="uid://ghlmpjsu3le4"]
+
+[ext_resource type="Script" path="res://Scripts/game_about.gd" id="1_47koa"]
+[ext_resource type="FontFile" uid="uid://ccq3aw4j4we1e" path="res://Fonts/Fira Sans/FiraSans-Regular.ttf" id="2_hvt00"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bue7p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_boxnv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gg28v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mv1qu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_klxbk"]
+
+[node name="GameAbout" type="Control"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1080.0
+offset_right = 1080.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_47koa")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 200
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 15
+
+[node name="AboutCreator" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(1000, 300)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_hvt00")
+theme_override_font_sizes/font_size = 75
+text = "Tents & Trees was invented by Dutch designer Leon Balmaekers in 1989."
+autowrap_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 15
+
+[node name="AboutDeveloper" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer2"]
+custom_minimum_size = Vector2(1000, 300)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_hvt00")
+theme_override_font_sizes/font_size = 75
+text = "Frogs & Trees was developed by Ecuadorian software developer Manuel Velarde in 2024."
+autowrap_mode = 2
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 75
+theme_override_constants/margin_bottom = 15
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_hvt00")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/normal = SubResource("StyleBoxEmpty_bue7p")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_boxnv")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gg28v")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_mv1qu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_klxbk")
+text = "Back       "
+alignment = 2
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer3/BackButton" to="." method="_on_back_button_pressed"]
