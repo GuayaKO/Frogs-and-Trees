@@ -1,6 +1,9 @@
 extends Control
 
 
+var GAME_OVER := "res://game_over.tscn"
+
+
 const ROWS := 6
 const COLS := 6
 const BOARD_SIZE := Vector2i(COLS, ROWS)
@@ -62,7 +65,7 @@ func _on_pressed(board_button: Button):
 				print(GameLogic.time_stop)
 				var duration := 0.9
 				GameLogic.shift_x_axis(self, -1080, duration)
-				var scene = GameLogic.GAME_OVER.instantiate()
+				var scene = load(GAME_OVER).instantiate()
 				var root := get_node("/root/GameRoot")
 				root.add_child(scene)
 				GameLogic.shift_x_axis(scene, -1080, duration)

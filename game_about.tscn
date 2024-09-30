@@ -40,8 +40,8 @@ layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_right = 40
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_right = 60
 theme_override_constants/margin_bottom = 15
 
 [node name="AboutCreator" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer"]
@@ -55,8 +55,8 @@ autowrap_mode = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_right = 40
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_right = 60
 theme_override_constants/margin_bottom = 15
 
 [node name="AboutDeveloper" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer2"]

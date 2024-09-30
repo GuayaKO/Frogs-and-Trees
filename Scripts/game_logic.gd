@@ -4,12 +4,15 @@ extends Node
 # Board pieces
 const PIECE_TREE := "Y"
 const PIECE_FROG := "K̈"
+const PIECE_EMPTY := "."
+const PIECE_UNKNOWN := " "
 
 
 # Default color palettes
 const GREEN_LIGHT := Color(0.733, 0.933, 0.800)		# BBEECC
 const GREEN_DARK := Color(0.000, 0.466, 0.000)		# 007700
 const PURPLE_DARK := Color(0.800, 0.200, 0.600)		# FF33C8
+const WHITE_LIGHT := Color(1.000, 1.000, 1.000)		# FFFFFF
 
 
 # Direction deltas
